@@ -17,4 +17,12 @@ public class Platform {
     public void addItem(Movie item) {
         content.add(item);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Movie> getContent() {
+        return content;
+    }
 }

@@ -27,38 +27,28 @@ public class Main {
             System.out.println("Opcion elegida: " + chooseOption);
 
             switch (chooseOption) {
+
                 case ADD_CONTENT -> {
-                    boolean available = true;
+
                     String title = ScannerUtils.captureText("Nombre de la pelicula: ");
                     String description = ScannerUtils.captureText("Descripcion de la pelicula: ");
                     String category = ScannerUtils.captureText("Categoria de la pelicula: ");
                     int duration = ScannerUtils.captureInt("Duracion de la pelicula (min): ");
+
+                    boolean available = true;
                     int releaseYear = ScannerUtils.captureInt("Año de estreno: ");
                     double qualify = ScannerUtils.captureDouble("Calificacion: ");
 
-                    platform.addItem(new Movie(title, description, category, duration));
+                    Movie movie = new Movie(title, description, category,duration);
+                    movie.setAvailable(available);
+                    movie.setReleaseYear(releaseYear);
+                    movie.qualify(qualify);
+
+                    platform.addItem(movie);
                 }
+
+                case EXIT -> System.exit(0);
             }
-
-            if (chooseOption == EXIT) System.exit(0);
         }
-
-        boolean available = true;
-        String title = ScannerUtils.captureText("Nombre de la pelicula: ");
-        String description = ScannerUtils.captureText("Descripcion de la pelicula: ");
-        String category = ScannerUtils.captureText("Categoria de la pelicula: ");
-        int duration = ScannerUtils.captureInt("Duracion de la pelicula (min): ");
-        int releaseYear = ScannerUtils.captureInt("Año de estreno: ");
-        double qualify = ScannerUtils.captureDouble("Calificacion: ");
-
-        Movie movie = new Movie(title, description, category,duration);
-        movie.setAvailable(available);
-        movie.setDescription(description);
-        movie.setReleaseYear(releaseYear);
-
-        movie.qualify(qualify);
-        movie.play();
-        System.out.println(movie.getTechnicalDatasheet());
-        System.out.println(movie.isPopular());
     }
 }
