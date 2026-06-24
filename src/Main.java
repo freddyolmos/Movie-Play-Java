@@ -10,8 +10,9 @@ public class Main {
     public static final int ADD_CONTENT = 1;
     public static final int SHOW_TITLES = 2;
     public static final int SEARCH_BY_TITLE = 3;
-    public static final int DELETE = 4;
-    public static final int EXIT = 5;
+    public static final int FILTER_BY_CATEGORY = 4;
+    public static final int DELETE = 7;
+    public static final int EXIT = 8;
 
     public static void main(String[] args) {
 
@@ -23,10 +24,11 @@ public class Main {
             int chooseOption = ScannerUtils.captureInt("""
                     Elige una opcion: 
                     1. Agregar pelicula
-                    2. Mostrar peliculas
+                    2. Mostrar titulos
                     3. Buscar por titulo
-                    4. Eliminar pelicula
-                    5. Salir""");
+                    4. Filtrar por genero
+                    7. Eliminar pelicula
+                    8. Salir""");
 
             System.out.println("Opcion elegida: " + chooseOption);
 
@@ -51,13 +53,22 @@ public class Main {
                     platform.addItem(movie);
                 }
 
-                case SHOW_TITLES -> platform.showTitles();
+                case SHOW_TITLES -> {
+                    List<String> titles = platform.showTitles();
+                    titles.forEach(System.out::println);
+                }
 
                 case SEARCH_BY_TITLE -> {
                     String title = ScannerUtils.captureText("Buscar pelicula: ");
                     Movie movie = platform.searchByTitle(title);
                     if (movie != null) System.out.println(movie.getTechnicalDatasheet());
                     else System.out.println("Pelicula no encontrada.");
+                }
+
+                case FILTER_BY_CATEGORY -> {
+                    String category = ScannerUtils.captureText("Menciona la categoria: ");
+                    List<Movie> movies = platform.getMoviesByCategory(category);
+                    movies.forEach(movie -> System.out.println(movie.getTechnicalDatasheet()));
                 }
 
                 case DELETE -> {

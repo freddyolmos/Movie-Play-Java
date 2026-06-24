@@ -22,19 +22,21 @@ public class Platform {
         content.remove(item);
     }
 
-    public void showTitles() {
-        for(Movie content: this.content) {
-            System.out.println(content.getTitle());
-        }
+    public List<String> showTitles() {
+        content.forEach(content  -> System.out.println(content.getTitle()));
+        return content.stream().map(Movie::getTitle).toList();
+    }
+
+    public List<Movie> getMoviesByCategory(String category) {
+        return content.stream().filter(content -> content.getCategory()
+                .equalsIgnoreCase(category))
+                .toList();
     }
 
     public Movie searchByTitle(String title) {
-        for (Movie content: this.content) {
-            if(content.getTitle().equalsIgnoreCase(title)) {
-                return content;
-            }
-        }
-        return null;
+        return content.stream().filter(content -> content.getTitle().equalsIgnoreCase(title))
+                .findFirst()
+                .orElse(null);
     }
 
     public String getName() {
