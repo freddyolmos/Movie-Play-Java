@@ -22,7 +22,7 @@ public class Movie {
     }
 
     public String getTechnicalDatasheet() {
-        return title + ", Año: " + releaseYear + ", Categoria: " + category;
+        return title + ", Duración: " + duration + ", Categoria: " + category;
     }
 
     public void qualify(double calification) {

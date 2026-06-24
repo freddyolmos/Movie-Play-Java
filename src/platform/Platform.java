@@ -18,6 +18,25 @@ public class Platform {
         content.add(item);
     }
 
+    public void deleteItem(Movie item) {
+        content.remove(item);
+    }
+
+    public void showTitles() {
+        for(Movie content: this.content) {
+            System.out.println(content.getTitle());
+        }
+    }
+
+    public Movie searchByTitle(String title) {
+        for (Movie content: this.content) {
+            if(content.getTitle().equalsIgnoreCase(title)) {
+                return content;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }
