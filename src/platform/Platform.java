@@ -1,5 +1,6 @@
 package platform;
 
+import content.Category;
 import content.Movie;
 
 import java.util.ArrayList;
@@ -7,34 +8,34 @@ import java.util.List;
 
 public class Platform {
     private String name;
-    private List<Movie> content;
+    private List<Movie> movies;
 
     public Platform(String name) {
         this.name = name;
-        this.content = new ArrayList<>();
+        this.movies = new ArrayList<>();
     }
 
     public void addItem(Movie item) {
-        content.add(item);
+        movies.add(item);
     }
 
     public void deleteItem(Movie item) {
-        content.remove(item);
+        movies.remove(item);
     }
 
     public List<String> showTitles() {
-        content.forEach(content  -> System.out.println(content.getTitle()));
-        return content.stream().map(Movie::getTitle).toList();
+        movies.forEach(content  -> System.out.println(content.getTitle()));
+        return movies.stream().map(Movie::getTitle).toList();
     }
 
-    public List<Movie> getMoviesByCategory(String category) {
-        return content.stream().filter(content -> content.getCategory()
-                .equalsIgnoreCase(category))
+    public List<Movie> getMoviesByCategory(Category category) {
+        return movies.stream().filter(content -> content.getCategory()
+                .equals(category))
                 .toList();
     }
 
     public Movie searchByTitle(String title) {
-        return content.stream().filter(content -> content.getTitle().equalsIgnoreCase(title))
+        return movies.stream().filter(content -> content.getTitle().equalsIgnoreCase(title))
                 .findFirst()
                 .orElse(null);
     }
@@ -43,7 +44,7 @@ public class Platform {
         return name;
     }
 
-    public List<Movie> getContent() {
-        return content;
+    public List<Movie> getMovies() {
+        return movies;
     }
 }

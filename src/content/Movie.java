@@ -4,17 +4,18 @@ public class Movie {
 
     private String title;
     private String description;
-    private double calification;
-    private String category;
+    private double qualification;
+    private Category category;
     private int releaseYear;
     private boolean available;
     private int duration;
 
-    public Movie(String title, String description, String category, int duration) {
+    public Movie(String title, String description, Category category, int duration, double qualification) {
         this.title = title;
         this.description = description;
         this.category = category;
         this.duration = duration;
+        this.qualification = qualification;
     }
 
     public void play() {
@@ -22,15 +23,17 @@ public class Movie {
     }
 
     public String getTechnicalDatasheet() {
-        return title + ", Duración: " + duration + ", Categoria: " + category;
+        return title + ", Categoria: "
+                + category + ", Duración: "
+                + duration + ", Calificacion: " + qualification + "/5.";
     }
 
-    public void qualify(double calification) {
-        if (calification > 0  && calification <= 5) this.calification = calification;
+    public void qualify(double qualification) {
+        if (qualification > 0  && qualification <= 5) this.qualification = qualification;
     }
 
     public boolean isPopular() {
-        return calification >= 4;
+        return qualification >= 4;
     }
 
     public String getTitle() {
@@ -41,11 +44,11 @@ public class Movie {
         return description;
     }
 
-    public double getCalification() {
-        return calification;
+    public double getQualification() {
+        return qualification;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
