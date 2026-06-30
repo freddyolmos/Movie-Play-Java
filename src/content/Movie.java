@@ -24,7 +24,7 @@ public class Movie {
 
     public String getTechnicalDatasheet() {
         return title + ", Categoria: "
-                + category + ", Duración: "
+                + category.getName() + ", Duración: "
                 + duration + ", Calificacion: " + qualification + "/5.";
     }
 

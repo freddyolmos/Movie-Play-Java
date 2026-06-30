@@ -1,5 +1,7 @@
 import content.Category;
 import content.Movie;
+import content.MovieSummary;
+import exceptions.ExistingMovieException;
 import platform.Platform;
 import util.ScannerUtils;
 
@@ -29,6 +31,7 @@ public class Main {
                     2. Mostrar titulos
                     3. Buscar por titulo
                     4. Filtrar por genero
+                    5. Ordenar por calificación
                     7. Eliminar pelicula
                     8. Salir""");
 
@@ -52,12 +55,16 @@ public class Main {
                     movie.setReleaseYear(releaseYear);
                     movie.qualify(qualification);
 
-                    platform.addItem(movie);
+                    try {
+                        platform.addItem(movie);
+                    } catch (ExistingMovieException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
 
                 case SHOW_TITLES -> {
-                    List<String> titles = platform.showTitles();
-                    titles.forEach(System.out::println);
+                    List<MovieSummary> movies = platform.getSummary();
+                    movies.forEach(movie -> System.out.println(movie.title()));
                 }
 
                 case SEARCH_BY_TITLE -> {
@@ -68,8 +75,19 @@ public class Main {
                 }
 
                 case FILTER_BY_CATEGORY -> {
+                    Category[] categories = Category.values();
+                    for (int i = 0; i < categories.length; i++) {
+                        System.out.printf("|" + (i + 1) + ". " + categories[i] + "|");
+                    }
+                    System.out.println();
                     Category category = ScannerUtils.captureCategory("Menciona la categoria: ");
                     List<Movie> movies = platform.getMoviesByCategory(category);
+                    movies.forEach(movie -> System.out.println(movie.getTechnicalDatasheet()));
+                }
+
+                case ORDER_BY_QUALIFICATION -> {
+                    String order = ScannerUtils.captureText("Que orden desea?(ASCENDENTE o DESCENDENTE): ");
+                    List<Movie> movies = platform.orderByQualification(order);
                     movies.forEach(movie -> System.out.println(movie.getTechnicalDatasheet()));
                 }
 
@@ -87,12 +105,14 @@ public class Main {
 
     private static void loadMovies(Platform platform) {
         platform.addItem(new Movie("El señor de los anillos", "Destruir el anillo es lo mas importante",
-                Category.FANTASIA, 200, 4.8));
+                Category.FANTASIA, 200, 3.8));
         platform.addItem(new Movie("Harry Potter", "Harry debe eliminar los horrocruxes",
                 Category.FANTASIA, 180, 4.6));
         platform.addItem(new Movie("Interestellar", "Es imprescindible hallar un nuevo mundo",
-                Category.CIENCIA_FICCION, 180, 4.4));
+                Category.CIENCIA_FICCION, 180, 4.9));
         platform.addItem(new Movie("Rapidos y Furiosos", "Los autos mas rapidos en Rio de Janeiro",
-                Category.ACCION, 170, 4.2));
+                Category.ACCION, 170, 2.2));
+        platform.addItem(new Movie("El Conjuro", "Historias de los Warren.",
+                Category.TERROR, 170, 4.5));
     }
 }
